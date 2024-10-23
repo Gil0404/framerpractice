@@ -14,6 +14,16 @@
   }
 }
 
+section {
+  overflow: hidden; /* Hide the scrollbar */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* For Firefox */
+}
+
+section::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

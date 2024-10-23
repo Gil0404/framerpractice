@@ -1,55 +1,40 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, spring } from "framer-motion";
+import MainPage from "./home/page";
 
 const SplashScreen = () => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isSplash, setIsSplash] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const splash = setTimeout(() => {
-      setIsSplash(false);
-    }, 3000); // Duration of the splash screen
-
     const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 4000); // Remove the Splash
-
+      setLoading(false);
+    }, 1000); // Adjust duration as necessary
     return () => clearTimeout(timer);
-    clearTimeout(splash);
   }, []);
 
-  return isVisible ? (
-    <motion.div
-      className="bg-zinc-50"
-      initial={{ opacity: 1 }}
-      animate={{ opacity: isSplash ? 1 : 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: "#fff",
-        fontSize: "2rem",
-        zIndex: 9999,
-      }}
-    >
-      {isSplash && (
-        <div className="text-primary w-screen h-screen flex flex-row">
-          <div className="w-1/2 h-full bg-primary "></div>{" "}
-          <div className="w-1/2 h-full bg-secondary "></div>
+  if (loading) {
+    return (
+      <motion.div
+        className="splash-screen bg-green-700 w-screen h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [1, 0] }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 2.3 }}
+      >
+        <div className="flex flex-row w-screen h-screen bg-secondary">
+          <motion.div
+            className="bg-primary w-1/2 h-screen"
+            initial={{ x: -1000 }}
+            animate={{ x: [200, -200, 0], scaleX: [2, 4, 1] }}
+            transition={{ ease: "easeInOut", type: "spring" }}
+          ></motion.div>
         </div>
-      )}
-    </motion.div>
-  ) : (
-    <></>
-  );
+      </motion.div>
+    );
+  }
+
+  return <MainPage />;
 };
 
 export default SplashScreen;

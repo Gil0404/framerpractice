@@ -17,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fresca.className} antialiased`}>{children}</body>
+      <body className={`${fresca.className} antialiased scroll-smooth`}>
+        {children}
+      </body>
     </html>
   );
 }
